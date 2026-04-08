@@ -6,7 +6,7 @@
 
 ## Overview
 - **Priority**: High
-- **Status**: ⬜ Pending
+- **Status**: ✅ Complete
 - **Effort**: 1.5h
 - Training loop that connects SnakeGame + QLearningAgent, tracks stats, supports pause/resume.
 
@@ -73,12 +73,12 @@ class Trainer:
 7. Test: train 100 episodes, verify stats collected correctly
 
 ## Todo
-- [ ] Trainer.__init__
-- [ ] train_episode() — single episode loop
-- [ ] train() — async multi-episode with callback
-- [ ] play_episode() — collect frames for replay
-- [ ] get_stats() + stop()
-- [ ] Smoke test: 100 episodes
+- [x] Trainer.__init__
+- [x] train_episode() — single episode loop
+- [x] train() — async multi-episode with callback
+- [x] play_episode() — collect frames for replay
+- [x] get_stats() + stop()
+- [x] Smoke test: 100 episodes
 
 ## Success Criteria
 - 1000 episodes train in <5 seconds

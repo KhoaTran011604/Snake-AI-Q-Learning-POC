@@ -6,7 +6,7 @@
 
 ## Overview
 - **Priority**: High
-- **Status**: ⬜ Pending
+- **Status**: ✅ Complete
 - **Effort**: 3h
 - Browser dashboard: game canvas, training chart, Q-value heatmap, controls.
 
@@ -84,13 +84,13 @@
 7. Test: full flow — train 1000 episodes → play → verify all components update
 
 ## Todo
-- [ ] index.html layout + dark theme CSS
-- [ ] game-canvas.js — snake renderer
-- [ ] training-chart.js — Chart.js reward curve
-- [ ] q-heatmap.js — Q-value action bars
-- [ ] controls.js — buttons + WS management
-- [ ] Integration: wire all components
-- [ ] Visual test in browser
+- [x] index.html layout + dark theme CSS
+- [x] game-canvas.js — snake renderer
+- [x] training-chart.js — Chart.js reward curve
+- [x] q-heatmap.js — Q-value action bars
+- [x] controls.js — buttons + WS management
+- [x] Integration: wire all components
+- [x] Visual test in browser
 
 ## Success Criteria
 - Dashboard loads, dark theme looks clean

@@ -6,7 +6,7 @@
 
 ## Overview
 - **Priority**: High
-- **Status**: ⬜ Pending
+- **Status**: ✅ Complete
 - **Effort**: 2h
 - Pure Python Snake game engine, no rendering. Headless for fast training.
 
@@ -84,14 +84,14 @@ if steps_without_food > max: reward = -10, done = True
 9. Test: run 100 random episodes, verify no crashes, scores > 0 sometimes
 
 ## Todo
-- [ ] Direction enum + Point namedtuple
-- [ ] SnakeGame.__init__ + reset()
-- [ ] _place_food() + _is_collision()
-- [ ] step() with relative actions
-- [ ] Reward calculation
-- [ ] get_rl_state() — 11 boolean features
-- [ ] get_state() — full serializable state
-- [ ] Smoke test: 100 random episodes
+- [x] Direction enum + Point namedtuple
+- [x] SnakeGame.__init__ + reset()
+- [x] _place_food() + _is_collision()
+- [x] step() with relative actions
+- [x] Reward calculation
+- [x] get_rl_state() — 11 boolean features
+- [x] get_state() — full serializable state
+- [x] Smoke test: 100 random episodes
 
 ## Success Criteria
 - 100 random episodes run without errors

@@ -6,7 +6,7 @@
 
 ## Overview
 - **Priority**: High
-- **Status**: ⬜ Pending
+- **Status**: ✅ Complete
 - **Effort**: 2.5h
 - Tabular Q-Learning agent using numpy. Core RL algorithm for the POC.
 
@@ -76,14 +76,14 @@ if done: target = reward (no future value)
 8. Test: verify Q-table updates correctly with manual state transitions
 
 ## Todo
-- [ ] QLearningAgent.__init__ with Q-table
-- [ ] state_to_index() binary encoding
-- [ ] get_action() epsilon-greedy
-- [ ] update() Bellman equation
-- [ ] decay_epsilon()
-- [ ] get_q_values() for visualization
-- [ ] save/load Q-table
-- [ ] Unit test: manual Q-update verification
+- [x] QLearningAgent.__init__ with Q-table
+- [x] state_to_index() binary encoding
+- [x] get_action() epsilon-greedy
+- [x] update() Bellman equation
+- [x] decay_epsilon()
+- [x] get_q_values() for visualization
+- [x] save/load Q-table
+- [x] Unit test: manual Q-update verification
 
 ## Success Criteria
 - state_to_index maps all 2048 states uniquely

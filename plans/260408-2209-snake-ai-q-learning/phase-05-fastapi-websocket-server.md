@@ -6,7 +6,7 @@
 
 ## Overview
 - **Priority**: High
-- **Status**: ⬜ Pending
+- **Status**: ✅ Complete
 - **Effort**: 2h
 - FastAPI server with WebSocket for realtime training updates + REST for control.
 
@@ -71,13 +71,13 @@ WebSocket:
 11. Test: start server, verify WS connection with wscat or browser console
 
 ## Todo
-- [ ] FastAPI app + static mount
-- [ ] Global game/agent/trainer instances
-- [ ] REST endpoints (train, stop, stats, config)
-- [ ] WS /ws/train — training updates stream
-- [ ] WS /ws/play — game replay stream
-- [ ] Error handling + graceful disconnect
-- [ ] Manual test with browser
+- [x] FastAPI app + static mount
+- [x] Global game/agent/trainer instances
+- [x] REST endpoints (train, stop, stats, config)
+- [x] WS /ws/train — training updates stream
+- [x] WS /ws/play — game replay stream
+- [x] Error handling + graceful disconnect
+- [x] Manual test with browser
 
 ## Success Criteria
 - Server starts on `localhost:8000`

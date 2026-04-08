@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Snake AI — Q-Learning</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #1a1a2e; color: #eee; font-family: 'Segoe UI', system-ui, sans-serif; }
+
+    .header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 24px; background: #16213e; border-bottom: 2px solid #0f3460;
+    }
+    .header h1 { font-size: 1.4rem; }
+    .header h1 span { color: #e94560; }
+
+    .controls {
+      display: flex; gap: 10px; align-items: center;
+    }
+    .controls button {
+      padding: 8px 20px; border: none; border-radius: 6px; cursor: pointer;
+      font-weight: 600; font-size: 0.9rem; transition: opacity 0.2s;
+    }
+    .controls button:hover { opacity: 0.85; }
+    .controls button:disabled { opacity: 0.4; cursor: not-allowed; }
+    #btn-train { background: #0f3460; color: #eee; }
+    #btn-play { background: #e94560; color: #fff; }
+    #btn-stop { background: #555; color: #eee; }
+
+    .controls input[type="number"] {
+      width: 80px; padding: 6px 8px; border: 1px solid #0f3460;
+      border-radius: 4px; background: #16213e; color: #eee; font-size: 0.9rem;
+    }
+    .controls label { font-size: 0.85rem; color: #aaa; }
+
+    .main {
+      display: grid; grid-template-columns: 420px 1fr;
+      gap: 20px; padding: 20px 24px; max-width: 1200px; margin: 0 auto;
+    }
+
+    .game-panel { display: flex; flex-direction: column; gap: 12px; }
+
+    #game-canvas {
+      border: 2px solid #0f3460; border-radius: 8px; background: #16213e;
+    }
+
+    .q-heatmap {
+      background: #16213e; border-radius: 8px; padding: 12px;
+      border: 1px solid #0f3460;
+    }
+    .q-heatmap h3 { font-size: 0.85rem; color: #aaa; margin-bottom: 8px; }
+
+    .charts-panel { display: flex; flex-direction: column; gap: 16px; }
+
+    .chart-container {
+      background: #16213e; border-radius: 8px; padding: 16px;
+      border: 1px solid #0f3460; flex: 1;
+    }
+    .chart-container h3 { font-size: 0.85rem; color: #aaa; margin-bottom: 8px; }
+
+    .status-bar {
+      display: flex; gap: 24px; padding: 12px 24px;
+      background: #16213e; border-top: 2px solid #0f3460;
+      font-size: 0.85rem; color: #aaa;
+    }
+    .status-bar .val { color: #e94560; font-weight: 600; }
+
+    .speed-control { display: flex; align-items: center; gap: 6px; }
+    .speed-control input[type="range"] { width: 80px; accent-color: #e94560; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>&#x1F40D; Snake AI — <span>Q-Learning</span></h1>
+    <div class="controls">
+      <label>Episodes:</label>
+      <input type="number" id="episode-input" value="1000" min="100" max="50000" step="100">
+      <button id="btn-train">Train</button>
+      <button id="btn-play" disabled>Play</button>
+      <button id="btn-stop" disabled>Stop</button>
+      <div class="speed-control">
+        <label>Speed:</label>
+        <input type="range" id="speed-slider" min="10" max="300" value="80">
+      </div>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="game-panel">
+      <canvas id="game-canvas" width="400" height="400"></canvas>
+      <div class="q-heatmap">
+        <h3>Q-Values (action preferences)</h3>
+        <canvas id="q-canvas" width="376" height="80"></canvas>
+      </div>
+    </div>
+    <div class="charts-panel">
+      <div class="chart-container">
+        <h3>Training Progress — Average Score (last 50 episodes)</h3>
+        <canvas id="training-chart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="status-bar">
+    <div>Episode: <span class="val" id="stat-episode">0</span></div>
+    <div>Score: <span class="val" id="stat-score">0</span></div>
+    <div>Best Avg: <span class="val" id="stat-best">0</span></div>
+    <div>Epsilon: <span class="val" id="stat-epsilon">1.0</span></div>
+    <div>Status: <span class="val" id="stat-status">Ready</span></div>
+  </div>
+
+  <script src="/static/game-canvas.js"></script>
+  <script src="/static/training-chart.js"></script>
+  <script src="/static/q-heatmap.js"></script>
+  <script src="/static/controls.js"></script>
+</body>
+</html>

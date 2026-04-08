@@ -6,7 +6,7 @@
 
 ## Overview
 - **Priority**: Medium
-- **Status**: ⬜ Pending
+- **Status**: ✅ Complete
 - **Effort**: 0.5h
 - End-to-end testing, bug fixes, README for demo instructions.
 
@@ -21,10 +21,10 @@
 4. Verify on clean install
 
 ## Todo
-- [ ] End-to-end test
-- [ ] Fix bugs found
-- [ ] README.md
-- [ ] Clean install verification
+- [x] End-to-end test
+- [x] Fix bugs found
+- [x] README.md
+- [x] Clean install verification
 
 ## Success Criteria
 - Full demo flow works without errors
