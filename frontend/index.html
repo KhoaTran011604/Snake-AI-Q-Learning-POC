@@ -28,6 +28,7 @@
     #btn-train { background: #0f3460; color: #eee; }
     #btn-play { background: #e94560; color: #fff; }
     #btn-stop { background: #555; color: #eee; }
+    #btn-reset { background: #c0392b; color: #fff; }
 
     .controls input[type="number"] {
       width: 80px; padding: 6px 8px; border: 1px solid #0f3460;
@@ -69,6 +70,8 @@
 
     .speed-control { display: flex; align-items: center; gap: 6px; }
     .speed-control input[type="range"] { width: 80px; accent-color: #e94560; }
+    .toggle-label { font-size: 0.85rem; color: #aaa; display: flex; align-items: center; gap: 4px; }
+    .toggle-label input { accent-color: #e94560; }
   </style>
 </head>
 <body>
@@ -80,10 +83,15 @@
       <button id="btn-train">Train</button>
       <button id="btn-play" disabled>Play</button>
       <button id="btn-stop" disabled>Stop</button>
+      <button id="btn-reset">Reset</button>
       <div class="speed-control">
         <label>Speed:</label>
         <input type="range" id="speed-slider" min="10" max="300" value="80">
       </div>
+      <label class="toggle-label">
+        <input type="checkbox" id="auto-improve" checked>
+        Auto-improve
+      </label>
     </div>
   </div>
 

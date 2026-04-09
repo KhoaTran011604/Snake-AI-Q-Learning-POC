@@ -6,8 +6,10 @@
   const btnTrain = document.getElementById("btn-train");
   const btnPlay = document.getElementById("btn-play");
   const btnStop = document.getElementById("btn-stop");
+  const btnReset = document.getElementById("btn-reset");
   const episodeInput = document.getElementById("episode-input");
   const speedSlider = document.getElementById("speed-slider");
+  const autoImproveToggle = document.getElementById("auto-improve");
 
   const statEpisode = document.getElementById("stat-episode");
   const statScore = document.getElementById("stat-score");
@@ -27,6 +29,7 @@
     btnTrain.disabled = training || playing;
     btnPlay.disabled = training || playing;
     btnStop.disabled = !training;
+    btnReset.disabled = training || playing;
     episodeInput.disabled = training || playing;
   }
 
@@ -88,10 +91,7 @@
         QHeatmap.render(msg.data.q_values);
         statScore.textContent = msg.data.score;
       } else if (msg.type === "play_complete") {
-        setStatus(`Game over — Score: ${msg.data.final_score}`);
-        setButtons(false, false);
-        ws.close();
-        ws = null;
+        handlePlayComplete(msg.data);
       }
     };
     ws.onerror = () => {
@@ -102,6 +102,50 @@
       setButtons(false, false);
     };
   });
+
+  // --- RESET ---
+  btnReset.addEventListener("click", async () => {
+    if (!confirm("Reset AI brain? All training progress will be lost.")) return;
+    try {
+      const res = await fetch("/api/reset", { method: "POST" });
+      const data = await res.json();
+      if (data.status === "reset") {
+        TrainingChart.reset();
+        GameCanvas.clear();
+        statEpisode.textContent = "0";
+        statScore.textContent = "0";
+        statBest.textContent = "0";
+        statEpsilon.textContent = "1.0";
+        setStatus("Brain reset!");
+      } else {
+        setStatus(data.message || "Reset failed");
+      }
+    } catch {
+      setStatus("Reset failed — connection error");
+    }
+  });
+
+  // --- PLAY COMPLETE (with optional auto-improve) ---
+  async function handlePlayComplete(data) {
+    const finalScore = data.final_score;
+    if (autoImproveToggle.checked) {
+      setStatus(`Score: ${finalScore} — Improving...`);
+      try {
+        const res = await fetch("/api/improve", { method: "POST" });
+        if (!res.ok) throw new Error("Server error");
+        const result = await res.json();
+        setStatus(`Score: ${finalScore} — Improved! (${result.total_episodes} ep)`);
+        statEpsilon.textContent = result.epsilon;
+        statBest.textContent = result.best_score;
+      } catch {
+        setStatus(`Score: ${finalScore} — Improve failed`);
+      }
+    } else {
+      setStatus(`Game over — Score: ${finalScore}`);
+    }
+    setButtons(false, false);
+    if (ws) { ws.close(); ws = null; }
+  }
 
   // --- STOP ---
   btnStop.addEventListener("click", () => {

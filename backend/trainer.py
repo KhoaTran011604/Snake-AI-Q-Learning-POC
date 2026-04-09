@@ -74,6 +74,20 @@ class Trainer:
             "best_score": self.best_score,
         }
 
+    def improve(self, episodes=50):
+        """Quick self-improvement: train with slight exploration."""
+        self._training = True
+        try:
+            old_epsilon = self.agent.epsilon
+            self.agent.epsilon = max(0.1, self.agent.epsilon)
+
+            for _ in range(episodes):
+                self.train_episode()
+
+            self.agent.epsilon = max(self.agent.epsilon_min, old_epsilon * 0.95)
+        finally:
+            self._training = False
+
     def play_episode(self):
         """Play one episode with greedy policy. Returns list of frames."""
         state = self.game.reset()

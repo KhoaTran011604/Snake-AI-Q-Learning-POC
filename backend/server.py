@@ -3,6 +3,7 @@
 import asyncio
 import json
 
+import numpy as np
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
@@ -42,6 +43,34 @@ async def stop_training():
     """Stop training."""
     trainer.stop()
     return {"status": "stopped"}
+
+
+@app.post("/api/reset")
+async def reset_agent():
+    """Reset Q-table and training stats."""
+    if trainer.is_training():
+        return {"status": "error", "message": "Cannot reset while training"}
+    agent.q_table = np.zeros((agent.state_size, agent.action_size))
+    agent.epsilon = 1.0
+    trainer.stats.clear()
+    trainer.best_score = 0
+    trainer.recent_scores.clear()
+    return {"status": "reset", "message": "Brain reset successfully"}
+
+
+@app.post("/api/improve")
+async def auto_improve():
+    """Run quick improvement after a play session."""
+    if trainer.is_training():
+        return {"status": "error", "message": "Already training"}
+    loop = asyncio.get_event_loop()
+    await loop.run_in_executor(None, trainer.improve, 50)
+    return {
+        "status": "improved",
+        "total_episodes": len(trainer.stats),
+        "best_score": trainer.best_score,
+        "epsilon": round(agent.epsilon, 4),
+    }
 
 
 @app.get("/api/stats")
